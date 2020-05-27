@@ -26,8 +26,8 @@
 			<Column>
 				<Text text="Language" />
 			</Column>
-         <Column>
-				<Text text="Available books" />
+         	<Column>
+				<Text text="Available No. of Books" />
 			</Column>
 		</columns>
 		<items>
@@ -43,7 +43,7 @@
                			}" 
 					/>
 					<Text text="{Language}" />
-					<Text text="{= parseInt(${NubmerAvailableBooks}) }" />
+					<Text text="{= parseInt(${AvailableNumber}) }" />
 				</cells>
 			</ColumnListItem>
 		</items>
