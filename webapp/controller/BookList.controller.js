@@ -57,7 +57,6 @@ sap.ui.define([
                 this.updateBookDialog.setModel(oModel);
                 this.updateBookDialog.getModel().setData(this.book);
                 this.updateBookDialog.open();
-                //pula
             } else {
                 MessageToast.show(oResourceBundle.getText("noSelectionUpdateError"));
             }
