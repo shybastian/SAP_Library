@@ -1,13 +1,16 @@
 <core:FragmentDefinition 
     xmlns="sap.m"
-    xmlns:core="sap.ui.core" xmlns:c="sap.ui.core" xmlns:l="sap.ui.layout"
-    xmlns:f="sap.ui.layout.form" xmlns:ui="sap.ui">
+    xmlns:core="sap.ui.core" 
+    xmlns:c="sap.ui.core" 
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:ui="sap.ui">
     <Dialog>
          <f:SimpleForm id="idUpdateBookForm"
             maxContainerCols="2"
             editable="true"
             layout="ResponsiveGridLayout"
-            title="Update Book"
+            title="{i18n>updateBook}"
             labelSpanL="2"
             labelSpanM="2"
             emptySpanL="0"
@@ -17,23 +20,23 @@
             class="editableForm">
 
             <f:content>
-                <core:Title text="Updated Information" />
-                <Label text="ISBN"/>
-                <Input value="{/ISBN}" placeholder="ISBN of Book."/>
-                <Label text="Title"/>
-                <Input value="{/Title}" placeholder="Title of Book"/>
-                <Label text="Author"/>
-                <Input value="{/Author}" placeholder="Author of Book."/>
-                <Label text="Publishing Date"/>
+                <core:Title text="{i18n>updateTitleText}" />
+                <Label text="{i18n>isbn}"/>
+                <Input value="{/ISBN}" placeholder="{i18n>isbn}"/>
+                <Label text="{i18n>title}"/>
+                <Input value="{/Title}" placeholder="{i18n>title}"/>
+                <Label text="{i18n>author}"/>
+                <Input value="{/Author}" placeholder="{i18n>author}"/>
+                <Label text="{i18n>publishedOn}"/>
                 <DatePicker value="{/DatePublished}"/>
-                <Label text="Language"/>
-                <Input value="{/Language}" placeholder="Language Code of Book"/>
-                <Label text="Total No. of Books"/>
-                <Input value="{path:'/TotalNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="Total No. of Books."/>
-                <Label text="Available No. of Books"/>
-                <Input value="{path:'/AvailableNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="Available No. of Books"/>
-                <Button text="Save" type="Accept" press="updateBook"/>
-                <Button text="Cancel" type="Reject" press="closeDialog"/>
+                <Label text="{i18n>language}"/>
+                <Input value="{/Language}" placeholder="{i18n>language}"/>
+                <Label text="{i18n>totalNr}"/>
+                <Input value="{path:'/TotalNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="{i18n>totalNr}"/>
+                <Label text="{i18n>availableNumber}"/>
+                <Input value="{path:'/AvailableNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="{i18n>availableNr}"/>
+                <Button text="{i18n>butonUpdate}" type="Accept" press="updateBook"/>
+                <Button text="{i18n>buttonCancel}" type="Reject" press="closeDialog"/>
             </f:content>
 
         </f:SimpleForm>

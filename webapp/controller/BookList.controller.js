@@ -1,8 +1,9 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
-    "sap/ui/core/Fragment"
-], function (Controller, MessageToast, Fragment) {
+    "sap/ui/core/Fragment",
+    "sap/ui/model/resource/ResourceModel"
+], function (Controller, MessageToast, Fragment, ResourceModel) {
    "use strict";
    return Controller.extend("org.ubb.books.controller.BookList", {
 
@@ -19,9 +20,14 @@ sap.ui.define([
         },
 
         onDeleteBook(oEvent){
+            var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
             const aSelContexts = this.byId("idBooksTable").getSelectedContexts();
-            const sBookPath = aSelContexts[0].getPath();
-            this.getView().getModel().remove(sBookPath);
+            if (aSelContexts.length != 0){
+                const sBookPath = aSelContexts[0].getPath();
+                this.getView().getModel().remove(sBookPath);
+            } else {
+                MessageToast.show(oResourceBundle.getText("noSelectionDeleteError"));
+            }
         },
 
         onInsertBook(oEvent){
@@ -36,6 +42,7 @@ sap.ui.define([
         },
 
         onUpdateBook(oEvent){
+            var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
             const aSelContext = this.byId("idBooksTable").getSelectedContexts();
             if (aSelContext.length != 0){
                 var oBook = aSelContext[0].getObject();
@@ -49,7 +56,7 @@ sap.ui.define([
                 this.updateBookDialog.getModel().setData(this.book);
                 this.updateBookDialog.open();
             } else {
-                MessageToast.show("Select a Book to update it!");
+                MessageToast.show(oResourceBundle.getText("noSelectionUpdateError"));
             }
         },
 
@@ -72,17 +79,18 @@ sap.ui.define([
         },
     
         saveBook(oEvent){
+            var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
             if (this.book.TotalNumber < this.book.AvailableNumber){
-                MessageToast.show("Total Number must be greater than Available Number!");
+                MessageToast.show(oResourceBundle.getText("totalNumberError"));
             } else {
                 this.book = this.parseDatePublishedForCreate(this.book);
                 var oModel = this.getView().getModel();
                 oModel.create('/Books', this.book, {
                     success: function() {
-                        MessageToast.show("Book added!");
+                        MessageToast.show(oResourceBundle.getText("saveSuccess"));
                     },
                     error: function(){
-                        MessageToast.show("There was an error.");
+                        MessageToast.show(oResourceBundle.getText("saveError"));
                     }
                 });
                 this.newBookDialog.close();
@@ -90,9 +98,9 @@ sap.ui.define([
         },
 
         updateBook(oEvent){
-            debugger;
+            var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
             if (this.book.TotalNumber < this.book.AvailableNumber){
-                MessageToast.show("Total No. of Books must be greater than Available No. of Books!");
+                MessageToast.show(this.oResourceBundle.getText("totalNumberError"));
             } else {
                 this.book = this.parseDatePublishedForCreate(this.book);
                 const aSelContexts = this.byId("idBooksTable").getSelectedContexts();
@@ -100,10 +108,10 @@ sap.ui.define([
                 var oModel = this.getView().getModel();
                 oModel.update(sBookPath, this.book, {
                     success: function() {
-                        MessageToast.show("Book updated!");
+                        MessageToast.show(this.oResourceBundle.getText("updateSuccess"));
                     },
                     error: function(){
-                        MessageToast.show("There was an error.");
+                        MessageToast.show(this.oResourceBundle.getText("updateError"));
                     }
                 });
                 this.updateBookDialog.close();
@@ -127,6 +135,10 @@ sap.ui.define([
             this.book.Language = "";
             this.book.TotalNumber = 0;
             this.book.AvailableNumber = 0;
+        },
+
+        validateBook(oBook){
+            return true;
         }
     });
 });

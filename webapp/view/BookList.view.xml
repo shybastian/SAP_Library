@@ -21,15 +21,15 @@
             <ToolbarSpacer></ToolbarSpacer>
                 <content>
                     <Button
-                        text="Delete"
+                        text="{i18n>deleteButton}"
                         press="onDeleteBook"
                     />
                     <Button
-                        text="Add Book"
+                        text="{i18n>addButton}"
                         press="onInsertBook"
                     />
                     <Button
-                        text="Update Book"
+                        text="{i18n>updateButton}"
                         press="onUpdateBook"
                     />
                 </content>
@@ -38,19 +38,19 @@
 	
 		<columns>
 			<Column>
-				<Text text="Title" />
+				<Text text="{i18n>title}" />
 			</Column>
 			<Column>
-				<Text text="Author" />
+				<Text text="{i18n>author}" />
 			</Column>
 			<Column>
-				<Text text="Published on" />
+				<Text text="{i18n>publishedOn}" />
 			</Column>
 			<Column>
-				<Text text="Language" />
+				<Text text="{i18n>language}" />
 			</Column>
          	<Column>
-				<Text text="Available No. of Books" />
+				<Text text="{i18n>availableNr}" />
 			</Column>
 		</columns>
 		<items>
