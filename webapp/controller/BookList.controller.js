@@ -36,6 +36,7 @@ sap.ui.define([
             }
             this.resetBook();
             var oModel = new sap.ui.model.json.JSONModel();
+            this.getView().addDependent(this.newBookDialog);
             this.newBookDialog.setModel(oModel);
             this.newBookDialog.getModel().setData(this.book);
             this.newBookDialog.open();
@@ -52,6 +53,7 @@ sap.ui.define([
                     this.updateBookDialog = sap.ui.xmlfragment("org.ubb.books.view.fragment.update",this);
                 }
                 var oModel = new sap.ui.model.json.JSONModel();
+                this.getView().addDependent(this.updateBookDialog);
                 this.updateBookDialog.setModel(oModel);
                 this.updateBookDialog.getModel().setData(this.book);
                 this.updateBookDialog.open();

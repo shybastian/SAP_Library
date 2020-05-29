@@ -36,7 +36,7 @@
                 <Label text="{i18n>availableNr}"/>
                 <Input value="{path:'/AvailableNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="{i18n>availableNr}"/>
                 <Button text="{i18n>buttonSave}" type="Accept" press="saveBook"/>
-                <Button text="{i18n>}" type="Reject" press="closeDialog"/>
+                <Button text="{i18n>buttonCancel}" type="Reject" press="closeDialog"/>
             </f:content>
 
         </f:SimpleForm>

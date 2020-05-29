@@ -35,7 +35,7 @@
                 <Input value="{path:'/TotalNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="{i18n>totalNr}"/>
                 <Label text="{i18n>availableNumber}"/>
                 <Input value="{path:'/AvailableNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="{i18n>availableNr}"/>
-                <Button text="{i18n>butonUpdate}" type="Accept" press="updateBook"/>
+                <Button text="{i18n>buttonUpdate}" type="Accept" press="updateBook"/>
                 <Button text="{i18n>buttonCancel}" type="Reject" press="closeDialog"/>
             </f:content>
 
