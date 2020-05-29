@@ -19,14 +19,13 @@ sap.ui.define([
             }
         },
 
-        onDeleteBook(oEvent){
+        onCheckoutBook(oEvent){
             var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-            const aSelContexts = this.byId("idBooksTable").getSelectedContexts();
-            if (aSelContexts.length != 0){
-                const sBookPath = aSelContexts[0].getPath();
-                this.getView().getModel().remove(sBookPath);
+            const aSelContext = this.byId("idBooksTable").getSelectedContexts();
+            if (!aSelContext.length == 0){
+                MessageToast.show("Merge!");
             } else {
-                MessageToast.show(oResourceBundle.getText("noSelectionDeleteError"));
+                MessageToast.show(oResourceBundle.getText("noSelectionCheckoutError"));
             }
         },
 
@@ -59,6 +58,17 @@ sap.ui.define([
                 this.updateBookDialog.open();
             } else {
                 MessageToast.show(oResourceBundle.getText("noSelectionUpdateError"));
+            }
+        },
+
+        onDeleteBook(oEvent){
+            var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+            const aSelContexts = this.byId("idBooksTable").getSelectedContexts();
+            if (aSelContexts.length != 0){
+                const sBookPath = aSelContexts[0].getPath();
+                this.getView().getModel().remove(sBookPath);
+            } else {
+                MessageToast.show(oResourceBundle.getText("noSelectionDeleteError"));
             }
         },
 

@@ -32,6 +32,10 @@
                         text="{i18n>updateButton}"
                         press="onUpdateBook"
                     />
+					<Button
+						text="{i18n>checkoutButton}"
+						press="onCheckoutBook"
+					/>
                 </content>
             </Toolbar>
         </headerToolbar>
