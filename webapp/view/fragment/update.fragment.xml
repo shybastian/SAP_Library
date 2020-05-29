@@ -25,13 +25,13 @@
                 <Label text="Author"/>
                 <Input value="{/Author}" placeholder="Author of Book."/>
                 <Label text="Publishing Date"/>
-                <DatePicker id="validDatePicker" value="{/DatePublished}"/>
+                <DatePicker value="{/DatePublished}"/>
                 <Label text="Language"/>
-                <Input value="{/Language}" placeholder="Language code of Book"/>
-                <Label text="Total Number of Books"/>
-                <Input value="{path:'/TotalNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="Total Number of Books."/>
-                <Label text="Abailable Books"/>
-                <Input value="{path:'/AvailableNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder=" of available books"/>
+                <Input value="{/Language}" placeholder="Language Code of Book"/>
+                <Label text="Total No. of Books"/>
+                <Input value="{path:'/TotalNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="Total No. of Books."/>
+                <Label text="Available No. of Books"/>
+                <Input value="{path:'/AvailableNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="Available No. of Books"/>
                 <Button text="Save" type="Accept" press="updateBook"/>
                 <Button text="Cancel" type="Reject" press="closeDialog"/>
             </f:content>

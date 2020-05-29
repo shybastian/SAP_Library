@@ -19,19 +19,19 @@
             <f:content>
                 <core:Title text="New Book Information" />
                 <Label text="ISBN"/>
-                <Input value="{/ISBN}" placeholder="ISBN of new book."/>
+                <Input value="{/ISBN}" placeholder="ISBN of new Book."/>
                 <Label text="Title"/>
-                <Input value="{/Title}" placeholder="Title of the book"/>
+                <Input value="{/Title}" placeholder="Title of the Book"/>
                 <Label text="Author"/>
-                <Input value="{/Author}" placeholder="Author of new book."/>
+                <Input value="{/Author}" placeholder="Author of new Book."/>
                 <Label text="Publishing Date"/>
-                <DatePicker id="validDatePicker" value="{/DatePublished}"/>
+                <DatePicker value="{/DatePublished}"/>
                 <Label text="Language"/>
-                <Input value="{/Language}" placeholder="Language code of the book"/>
-                <Label text="Total Number of Books"/>
-                <Input value="{path:'/TotalNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="total number of books."/>
-                <Label text="Abailable Books"/>
-                <Input value="{path:'/AvailableNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="Number of available books"/>
+                <Input value="{/Language}" placeholder="Language Code of the Book"/>
+                <Label text="Total No. of Books"/>
+                <Input value="{path:'/TotalNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="Total No. of Books."/>
+                <Label text="Available No. of Books"/>
+                <Input value="{path:'/AvailableNumber', type:'sap.ui.model.odata.type.Int16'}" placeholder="Available No. of Books."/>
                 <Button text="Save" type="Accept" press="saveBook"/>
                 <Button text="Cancel" type="Reject" press="closeDialog"/>
             </f:content>
