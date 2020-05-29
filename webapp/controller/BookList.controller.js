@@ -82,9 +82,7 @@ sap.ui.define([
     
         saveBook(oEvent){
             var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-            if (this.book.TotalNumber < this.book.AvailableNumber){
-                MessageToast.show(oResourceBundle.getText("totalNumberError"));
-            } else {
+            if (this.validateBook(this.book)){
                 this.book = this.parseDatePublishedForCreate(this.book);
                 var oModel = this.getView().getModel();
                 oModel.create('/Books', this.book, {
@@ -101,19 +99,17 @@ sap.ui.define([
 
         updateBook(oEvent){
             var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
-            if (this.book.TotalNumber < this.book.AvailableNumber){
-                MessageToast.show(this.oResourceBundle.getText("totalNumberError"));
-            } else {
+            if (this.validateBook(this.book)){
                 this.book = this.parseDatePublishedForCreate(this.book);
                 const aSelContexts = this.byId("idBooksTable").getSelectedContexts();
                 const sBookPath = aSelContexts[0].getPath();
                 var oModel = this.getView().getModel();
                 oModel.update(sBookPath, this.book, {
                     success: function() {
-                        MessageToast.show(this.oResourceBundle.getText("updateSuccess"));
+                        MessageToast.show(oResourceBundle.getText("updateSuccess"));
                     },
                     error: function(){
-                        MessageToast.show(this.oResourceBundle.getText("updateError"));
+                        MessageToast.show(oResourceBundle.getText("updateError"));
                     }
                 });
                 this.updateBookDialog.close();
@@ -140,6 +136,43 @@ sap.ui.define([
         },
 
         validateBook(oBook){
+            var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+            if (oBook.ISBN.length === 0){
+                MessageToast.show(oResourceBundle.getText("isbnEmptyError"));
+                return false;
+            }
+            if (oBook.ISBN.length > 13){
+                MessageToast.show(oResourceBundle.getText("isbnLongerThan13Error"));
+                return false;
+            }
+            if (oBook.Title.length === 0){
+                MessageToast.show(oResourceBundle.getText("titleEmptyError"));
+                return false;
+            }
+            if (oBook.Author.length === 0){
+                MessageToast.show(oResourceBundle.getText("authorEmptyError"));
+                return false;
+            }
+            if (oBook.DatePublished.length === 0){
+                MessageToast.show(oResourceBundle.getText("dateEmptyError"));
+                return false;
+            }
+            if (oBook.Language.length === 0){
+                MessageToast.show(oResourceBundle.getText("languageEmptyError"));
+                return false;
+            }
+            if (parseInt(oBook.TotalNumber) < 0){
+                MessageToast.show(oResourceBundle.getText("totalNumberNegativeError"));
+                return false;
+            }
+            if (parseInt(oBook.AvailableNumber) < 0){
+                MessageToast.show(oResourceBundle.getText("availableNumberNegativeError"));
+                return false;
+            }
+            if (parseInt(oBook.TotalNumber) < parseInt(oBook.AvailableNumber)){
+                MessageToast.show(oResourceBundle.getText("totalNumberError"));
+                return false;
+            }
             return true;
         }
     });
