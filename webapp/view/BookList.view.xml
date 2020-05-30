@@ -27,36 +27,44 @@
 					<DatePicker id="inputDateEnd"   width="20%" value=""/>
 					<Input id="inputLanguage" width="20%" placeholder="{i18n>language}"/>
 					<Button 
-						text="{i18n>filter}"
 						press="onSearchButtonPressed"
-						enabled="true"
+						icon="sap-icon://filter"
 					/>
 					<Button 
 						press="onSortButtonPressed" 
-						text="{i18n>sort}"
-						icon="sap-icon://drop-down-list" 
-						tooltip="{i18n>sort}"
+						icon="sap-icon://sort" 
 					/>
 				</content>
 
             <ToolbarSeparator/>
 
                 <content>
-                    <Button
-                        text="{i18n>deleteButton}"
-                        press="onDeleteBook"
-                    />
-                    <Button
-                        text="{i18n>addButton}"
+					<Button
                         press="onInsertBook"
+						icon="sap-icon://add-coursebook"
+						type="Accept"
                     />
                     <Button
-                        text="{i18n>updateButton}"
                         press="onUpdateBook"
+						icon="sap-icon://detail-view"
+						type="Attention"
                     />
+                    <Button
+                        press="onDeleteBook"
+						icon="sap-icon://delete"
+						type="Reject"
+                    />
+
+				</content>
+
+			<ToolbarSeparator/>
+
+				<content>
 					<Button
 						text="{i18n>checkoutButton}"
 						press="onCheckoutBook"
+						icon="sap-icon://cart-4"
+						type="Ghost"
 					/>
                 </content>
             </Toolbar>
