@@ -23,8 +23,8 @@ sap.ui.define([
         },
 
         /*
-            This function is called when the users presses on the "Filter" Button.
-            It takes all the values from the input fields and pushes Filters to the Gateway Service
+        * This function is called when the users presses on the "Filter" Button.
+        * It takes all the values from the input fields and pushes Filters to the Gateway Service
         */
         onSearchButtonPressed(oEvent){
             // Get the Data from the Inputs
@@ -63,7 +63,7 @@ sap.ui.define([
         },
 
         /*
-            Opens the Fragment which displays the Sort Options
+        * Opens the Fragment which displays the Sort Options
         */
         onSortButtonPressed(oEvent){
             this._oDialog = sap.ui.xmlfragment("org.ubb.books.view.fragment.sorter", this);
@@ -72,7 +72,7 @@ sap.ui.define([
         },
 
         /*
-            Triggers when the confirm button on the Sort Fragment is pressed
+        * Triggers when the confirm button on the Sort Fragment is pressed
         */
         onConfirmSort(oEvent){
             var oView = this.getView();
@@ -88,21 +88,29 @@ sap.ui.define([
             oBinding.sort(aSorters);
         },
 
+        /*
+        * Checks a book out.
+        */
         onCheckoutBook(oEvent){
             var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
             const aSelContext = this.byId("idBooksTable").getSelectedContexts();
             if (!aSelContext.length == 0){
-                MessageToast.show("Merge!");
+                MessageToast.show(oResourceBundle.getText("notYetImplemented"));
             } else {
                 MessageToast.show(oResourceBundle.getText("noSelectionCheckoutError"));
             }
         },
 
+        /*
+        * Opens the Insert Fragment when the Insert Button is clicked
+        */
         onInsertBook(oEvent){
             if(!this.newBookDialog){
                 this.newBookDialog = sap.ui.xmlfragment("org.ubb.books.view.fragment.insert",this);
             }
+            // Reset the book because it may have some set attributes, if an update was made before
             this.resetBook();
+            // Set the JSON Model and open Fragment
             var oModel = new sap.ui.model.json.JSONModel();
             this.getView().addDependent(this.newBookDialog);
             this.newBookDialog.setModel(oModel);
@@ -110,16 +118,21 @@ sap.ui.define([
             this.newBookDialog.open();
         },
 
+        /*
+        * Opens the Update Fragment when the Update Button is clicked
+        */
         onUpdateBook(oEvent){
             var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
             const aSelContext = this.byId("idBooksTable").getSelectedContexts();
             if (aSelContext.length != 0){
+                // Get the selected Book and fills the inputs of the fragment
                 var oBook = aSelContext[0].getObject();
                 oBook = this.parseDatePublishedForUpdate(oBook);
                 this.book = oBook;
                 if(!this.updateBookDialog){
                     this.updateBookDialog = sap.ui.xmlfragment("org.ubb.books.view.fragment.update",this);
                 }
+                // Set the JSON Model and open Fragment
                 var oModel = new sap.ui.model.json.JSONModel();
                 this.getView().addDependent(this.updateBookDialog);
                 this.updateBookDialog.setModel(oModel);
@@ -130,6 +143,9 @@ sap.ui.define([
             }
         },
 
+        /*
+        * Deletes a selected Book
+        */
         onDeleteBook(oEvent){
             var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
             const aSelContexts = this.byId("idBooksTable").getSelectedContexts();
@@ -141,6 +157,11 @@ sap.ui.define([
             }
         },
 
+        /*
+        * Parse the date of the given book to a format that SAP can accept
+        * @input: oBook, object which the function parses the date for
+        * @return: oBook, with parsed date
+        */
         parseDatePublishedForCreate(oBook){
             var dateString = oBook.DatePublished;
             var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "dd/MM/yyyy" });
@@ -150,6 +171,12 @@ sap.ui.define([
             return oBook;
         },
 
+        /*
+        * Parse the date of the given book to a format that the Front can accept.
+        * This was implemented because the SAP system returned a long version of the date
+        * @input: oBook, book object which the function parses the date for
+        * @return: oBook, with parsed date
+        */
         parseDatePublishedForUpdate(oBook){
             var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern : "dd/MM/yyyy" }); 
             var date = new Date(oBook.DatePublished);
@@ -159,9 +186,13 @@ sap.ui.define([
             return oBook;
         },
     
+        /*
+        * Triggers when the saveBook button on the Insert Fragment is pressed.
+        */
         saveBook(oEvent){
             var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
             if (this.validateBook(this.book)){
+                // Parse the date and insert
                 this.book = this.parseDatePublishedForCreate(this.book);
                 var oModel = this.getView().getModel();
                 oModel.create('/Books', this.book, {
@@ -176,9 +207,13 @@ sap.ui.define([
             }
         },
 
+        /*
+        * Triggers when the updateBook button on the Update fragment is pressed.
+        */
         updateBook(oEvent){
             var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
             if (this.validateBook(this.book)){
+                // Get the Path of the selected book and update
                 this.book = this.parseDatePublishedForCreate(this.book);
                 const aSelContexts = this.byId("idBooksTable").getSelectedContexts();
                 const sBookPath = aSelContexts[0].getPath();
@@ -214,6 +249,11 @@ sap.ui.define([
             this.book.AvailableNumber = 0;
         },
 
+        /*
+        * Validates the book. A message will be shown if the book is not valid
+        * @input: oBook, object which needs to be validated
+        * @return: true if oBook is valid, false otherwise
+        */
         validateBook(oBook){
             var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
             if (oBook.ISBN.length === 0){
