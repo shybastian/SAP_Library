@@ -22,7 +22,7 @@
             <f:content>
                 <core:Title text="{i18n>updateTitleText}" />
                 <Label text="{i18n>isbn}"/>
-                <Input value="{/ISBN}" placeholder="{i18n>isbn}"/>
+                <Input value="{/ISBN}" placeholder="{i18n>isbn}" editable="false"/>
                 <Label text="{i18n>title}"/>
                 <Input value="{/Title}" placeholder="{i18n>title}"/>
                 <Label text="{i18n>author}"/>
