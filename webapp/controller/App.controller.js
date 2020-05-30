@@ -3,6 +3,5 @@ sap.ui.define([
 ], function (Controller) {
    "use strict";
    return Controller.extend("org.ubb.books.controller.App", {
-      
    });
 });

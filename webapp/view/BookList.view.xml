@@ -1,5 +1,6 @@
 <mvc:View
-   xmlns:mvc="sap.ui.core.mvc"
+	controllerName="org.ubb.books.controller.BookList"
+    xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
 	xmlns="sap.m">
 
@@ -11,23 +12,82 @@
 			}
 		}"
 		growing="true"
-		growingThreshold="10">
+		growingThreshold="10"
+		mode="SingleSelectLeft"
+		>
+
+		<headerToolbar>
+            <Toolbar>
+
+				<content>
+					<Input id="inputISBN" width="20%" placeholder="{i18n>isbn}"/>
+					<Input id="inputTitle" width="20%" placeholder="{i18n>title}"/>
+					<Input id="inputAuthor" width="20%" placeholder="{i18n>author}"/>
+					<DatePicker id="inputDateStart" width="20%" value=""/>
+					<DatePicker id="inputDateEnd"   width="20%" value=""/>
+					<Input id="inputLanguage" width="20%" placeholder="{i18n>language}"/>
+					<Button 
+						press="onSearchButtonPressed"
+						icon="sap-icon://filter"
+					/>
+					<Button 
+						press="onSortButtonPressed" 
+						icon="sap-icon://sort" 
+					/>
+				</content>
+
+            <ToolbarSeparator/>
+
+                <content>
+					<Button
+                        press="onInsertBook"
+						icon="sap-icon://add-coursebook"
+						type="Accept"
+                    />
+                    <Button
+                        press="onUpdateBook"
+						icon="sap-icon://detail-view"
+						type="Attention"
+                    />
+                    <Button
+                        press="onDeleteBook"
+						icon="sap-icon://delete"
+						type="Reject"
+                    />
+
+				</content>
+
+			<ToolbarSeparator/>
+
+				<content>
+					<Button
+						text="{i18n>checkoutButton}"
+						press="onCheckoutBook"
+						icon="sap-icon://cart-4"
+						type="Ghost"
+					/>
+                </content>
+            </Toolbar>
+        </headerToolbar>
 	
 		<columns>
 			<Column>
-				<Text text="Title" />
+				<Text text="{i18n>title}" />
 			</Column>
 			<Column>
-				<Text text="Author" />
+				<Text text="{i18n>author}" />
 			</Column>
 			<Column>
-				<Text text="Published on" />
+				<Text text="{i18n>publishedOn}" />
 			</Column>
 			<Column>
-				<Text text="Language" />
+				<Text text="{i18n>language}" />
 			</Column>
-         <Column>
-				<Text text="Available books" />
+         	<Column>
+				<Text text="{i18n>availableNr}" />
+			</Column>
+			<Column>
+				<Text text="{i18n>totalNr}" />
 			</Column>
 		</columns>
 		<items>
@@ -43,7 +103,8 @@
                			}" 
 					/>
 					<Text text="{Language}" />
-					<Text text="{= parseInt(${NubmerAvailableBooks}) }" />
+					<Text text="{= parseInt(${AvailableNumber}) }" />
+					<Text text="{= parseInt(${TotalNumber}) }"/>
 				</cells>
 			</ColumnListItem>
 		</items>
