@@ -2,8 +2,10 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
     "sap/ui/core/Fragment",
-    "sap/ui/model/resource/ResourceModel"
-], function (Controller, MessageToast, Fragment, ResourceModel) {
+    "sap/ui/model/resource/ResourceModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
+], function (Controller, MessageToast, Fragment, ResourceModel, Filter, FilterOperator) {
    "use strict";
    return Controller.extend("org.ubb.books.controller.BookList", {
 
@@ -17,6 +19,52 @@ sap.ui.define([
                 TotalNumber:"",
                 AvailableNumber: 0
             }
+        },
+
+        /*
+            This function is called when the users presses on the "Filter" Button.
+            It takes all the values from the input fields and pushes Filters to the Gateway Service
+        */
+        onSearchButtonPressed(oEvent){
+            // Get the Data from the Inputs
+            var isbn = this.byId("inputISBN").getValue();
+            var title = this.byId("inputTitle").getValue();
+            var author = this.byId("inputAuthor").getValue();
+            var language = this.byId("inputLanguage").getValue();
+            var dateStart = this.byId("inputDateStart").getValue();
+            var dateEnd = this.byId("inputDateEnd").getValue();
+
+            var aFilter = [];
+            var oList = this.getView().byId("idBooksTable");
+            var oBinding = oList.getBinding("items");
+
+            // Push set filters
+            if (isbn) {
+                aFilter.push(new Filter("ISBN", FilterOperator.Contains, isbn))
+            }
+            if (author) {
+                aFilter.push(new Filter("Author", FilterOperator.Contains, author));
+            }
+            if (title) {
+                aFilter.push(new Filter("Title", FilterOperator.Contains, title));
+            }
+            if (dateStart && dateEnd) {
+                var filter = new Filter("DatePublished", FilterOperator.BT, dateStart, dateEnd);
+                aFilter.push(filter);
+            } else {
+                var oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+                MessageToast.show(oResourceBundle.getText("dateStartOrDateEndNotSetError"));
+            }
+            if (language) {
+                aFilter.push(new Filter("Language", FilterOperator.Contains, language));
+            }
+            oBinding.filter(aFilter);
+        },
+
+        onSortButtonPressed(oEvent){
+            this._oDialog = sap.ui.xmlfragment("org.ubb.books.view.fragment.sorter", this);
+            this.getView().addDependent(this._oDialog);
+            this._oDialog.open();
         },
 
         onCheckoutBook(oEvent){
