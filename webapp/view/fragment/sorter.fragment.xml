@@ -5,7 +5,7 @@
   xmlns:l="sap.ui.layout"
   xmlns:f="sap.ui.layout.form"
   xmlns:ui="sap.ui">
-  <ViewSettingsDialog confirm="onConfirm">
+  <ViewSettingsDialog confirm="onConfirmSort">
     <sortItems>
       <ViewSettingsItem key="ISBN" text="{i18n>isbn}" selected="true"/>
       <ViewSettingsItem key="Title" text="{i18n>title}"/>

@@ -4,8 +4,9 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/ui/model/resource/ResourceModel",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (Controller, MessageToast, Fragment, ResourceModel, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/ui/model/Sorter"
+], function (Controller, MessageToast, Fragment, ResourceModel, Filter, FilterOperator, Sorter) {
    "use strict";
    return Controller.extend("org.ubb.books.controller.BookList", {
 
@@ -61,10 +62,30 @@ sap.ui.define([
             oBinding.filter(aFilter);
         },
 
+        /*
+            Opens the Fragment which displays the Sort Options
+        */
         onSortButtonPressed(oEvent){
             this._oDialog = sap.ui.xmlfragment("org.ubb.books.view.fragment.sorter", this);
             this.getView().addDependent(this._oDialog);
             this._oDialog.open();
+        },
+
+        /*
+            Triggers when the confirm button on the Sort Fragment is pressed
+        */
+        onConfirmSort(oEvent){
+            var oView = this.getView();
+            var oTable = oView.byId("idBooksTable");
+            var mParams = oEvent.getParameters();
+            var oBinding = oTable.getBinding("items");
+
+            // apply the sorter
+            var aSorters = [];
+            var sPath = mParams.sortItem.getKey();
+            var bDescending = mParams.sortDescending;
+            aSorters.push(new Sorter(sPath, bDescending));
+            oBinding.sort(aSorters);
         },
 
         onCheckoutBook(oEvent){
